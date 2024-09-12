@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Go to server directory
+        run: cd server
+
       - name: Install Dependencies
         run: npm install
 
