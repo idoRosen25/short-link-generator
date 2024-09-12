@@ -1,0 +1,48 @@
+name: Run Backend Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: client
+
+      - name: Build Project
+        run: npm run build
+        working-directory: client
+    
+  build-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+    
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+    
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: server
+    
+      - name: Build Project
+        run: npm run build
+        working-directory: server
+
