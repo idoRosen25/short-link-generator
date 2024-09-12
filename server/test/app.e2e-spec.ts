@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { Link } from 'src/entities/url/url.entity';
@@ -11,6 +11,11 @@ import {
   repositoryMockFactory,
 } from './consts';
 import { getRepositoryToken } from '@nestjs/typeorm';
+
+const MockLinkEntity: Link = {
+  shortLink: mockShortURL,
+  originalLink: mockOriginalURL,
+};
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -40,9 +45,19 @@ describe('AppController (e2e)', () => {
   });
 
   it('Should create a valid url', async () => {
-    mockLinkRepository.save.mockReturnValue({
-      shortLink: mockShortURL,
-      originalLink: mockOriginalURL,
-    } as Link);
+    mockLinkRepository.save.mockReturnValue(MockLinkEntity);
+
+    const { body, status } = await request(app.getHttpServer())
+      .post('/url')
+      .send({
+        url: mockOriginalURL,
+      });
+
+    expect(status).toBe(HttpStatus.CREATED);
+    expect(body).toMatchObject(MockLinkEntity);
+  });
+
+  afterAll(() => {
+    app.close();
   });
 });
