@@ -1,9 +1,9 @@
 name: Run Backend Tests
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -22,4 +22,4 @@ jobs:
         run: npm install
 
       - name: Run Tests
-        run: cd server && npm run test && cd ..
+        run: npm run test
