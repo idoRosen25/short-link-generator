@@ -1,6 +1,6 @@
 # Short URL Generator
 ***
-> Created by [Ido Rosenblum](https://github.com/idoRosen25)
+
 ## Tech
 ***
 - NextJS
