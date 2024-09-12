@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Link } from './entities/url/url.entity';
-import { UrlController } from './entities/url.controller';
+import { UrlController } from './url.controller';
 import { UrlService } from './url.service';
 
 @Module({

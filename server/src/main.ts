@@ -4,7 +4,11 @@ import { ValidationPipe } from '@nestjs/common';
 import 'reflect-metadata';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: '*',
+    },
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -12,6 +16,6 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
+  await app.listen(8080);
 }
 bootstrap();
