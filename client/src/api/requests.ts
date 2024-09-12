@@ -2,6 +2,13 @@ import { AxiosError } from 'axios'
 import Axios from './axios'
 import { ShortLinkRes } from './types'
 
+type ResponseError = {
+  response?: {
+    data: {
+      message: string
+    }
+  }
+}
 export const cerateShortLink = async (url: string) => {
   try {
     const res = await Axios.post<ShortLinkRes | { error: string }>('http://localhost:8080/url', {
@@ -12,11 +19,11 @@ export const cerateShortLink = async (url: string) => {
       throw new Error((res.data as unknown as AxiosError)?.message)
     }
     return res.data
-  } catch (error: any) {
-    console.error('Failed to create shortLink: ', error)
-    const errorResponse = error?.response
+  } catch (error) {
+    const CastError = error as ResponseError
+    const errorResponse = CastError?.response
     return {
-      error: `${errorResponse.data?.message || errorResponse.data}. Please try another link`,
+      error: `${errorResponse?.data?.message || errorResponse?.data}. Please try another link`,
     }
   }
 }
