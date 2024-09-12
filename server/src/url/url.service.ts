@@ -44,7 +44,6 @@ export class UrlService {
 
       return savedLink;
     } catch (err) {
-      console.error('Failed to create short url', err);
       throw err;
     }
   }

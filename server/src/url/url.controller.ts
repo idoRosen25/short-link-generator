@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { HandleUrlBody } from '../entities/url/dto/url.dto';
 import { UrlService } from 'src/url/url.service';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
