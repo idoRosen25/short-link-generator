@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { HandleUrlBody } from './entities/url/dto/url.dto';
-import { UrlService } from 'src/url.service';
+import { HandleUrlBody } from '../entities/url/dto/url.dto';
+import { UrlService } from 'src/url/url.service';
 
 @Controller('/url')
 export class UrlController {

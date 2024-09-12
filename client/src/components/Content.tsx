@@ -13,10 +13,9 @@ interface Props {
 }
 export function MainContent({ className = '' }: Props) {
   const [inputValue, setInputValue] = useState('')
-  const [generateRes, setGenerateRes] = useState<ShortLinkRes | null>()
+  const [generateRes, setGenerateRes] = useState<ShortLinkRes | { error: string } | null>()
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log('generateRes: ', generateRes)
   return (
     <section className={cn(['flex flex-col', className])}>
       <Input
@@ -32,7 +31,7 @@ export function MainContent({ className = '' }: Props) {
           <div className="flex justify-center">{isLoading && <Spinner className="self-center" />}</div>
           {generateRes &&
             Object.entries(generateRes).map(([key, value]) => {
-              return <Typography text={`${camelToPascalWithSpaces(key)}: ${value}`} />
+              return <Typography key={key} text={`${camelToPascalWithSpaces(key)}: ${value}`} />
             })}
         </div>
       )}
@@ -55,20 +54,12 @@ export function MainContent({ className = '' }: Props) {
         </Button>
         <Button
           className="bg-green-700 font-semibold"
-          disabled={!generateRes}
+          disabled={!(generateRes as ShortLinkRes)?.originalLink}
           onClick={() => {
-            window.open(generateRes?.originalLink, '_blank', 'noopener,noreferrer')
+            window.open((generateRes as ShortLinkRes)?.originalLink, '_blank', 'noopener,noreferrer')
           }}
         >
           Browse
-          {/* <Link
-            href={generateRes?.originalLink || ''}
-            target="_blank"
-            rel="noopener noreferrer"
-            referrerPolicy="no-referrer"
-          >
-            Foo
-          </Link> */}
         </Button>
         <Button
           onClick={() => {
