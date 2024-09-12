@@ -31,7 +31,7 @@ export class UrlService {
 
       const isValidUrl = await this.dnsLookupService.checkValidUrl(url);
       if (!isValidUrl) {
-        return new BadRequestException('Invalid URL');
+        throw new BadRequestException('Invalid URL');
       }
 
       const shortUrlKey = randomUUID().substring(0, 8);
@@ -45,7 +45,7 @@ export class UrlService {
       return savedLink;
     } catch (err) {
       console.error('Failed to create short url', err);
-      return null;
+      throw err;
     }
   }
 }

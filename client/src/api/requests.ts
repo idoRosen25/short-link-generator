@@ -8,14 +8,15 @@ export const cerateShortLink = async (url: string) => {
       url,
     })
 
-    if (res.status) {
-      throw (res.data as unknown as AxiosError)?.message
+    if (res.status !== 201) {
+      throw new Error((res.data as unknown as AxiosError)?.message)
     }
     return res.data
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to create shortLink: ', error)
+    const errorResponse = error?.response
     return {
-      error: `${error}. Please try another link`,
+      error: `${errorResponse.data?.message || errorResponse.data}. Please try another link`,
     }
   }
 }

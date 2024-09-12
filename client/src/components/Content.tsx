@@ -52,15 +52,17 @@ export function MainContent({ className = '' }: Props) {
         >
           Generate Link
         </Button>
-        <Button
-          className="bg-green-700 font-semibold"
-          disabled={!(generateRes as ShortLinkRes)?.originalLink}
-          onClick={() => {
-            window.open((generateRes as ShortLinkRes)?.originalLink, '_blank', 'noopener,noreferrer')
-          }}
-        >
-          Browse
-        </Button>
+        {(generateRes as ShortLinkRes)?.originalLink && (
+          <Button
+            className="bg-green-700 font-semibold"
+            disabled={!(generateRes as ShortLinkRes)?.originalLink}
+            onClick={() => {
+              window.open((generateRes as ShortLinkRes)?.originalLink, '_blank', 'noopener,noreferrer')
+            }}
+          >
+            Browse
+          </Button>
+        )}
         <Button
           onClick={() => {
             setInputValue('')
